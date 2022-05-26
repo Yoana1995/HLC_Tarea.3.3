@@ -22,20 +22,28 @@ class MainActivity : AppCompatActivity() {
 
         amigosDBHelper = miSQLiteHelper(this)
 
-        val nombres = arrayOf("Yoana","Marta","Sofia","Laila","Manuel","Carlos","Antonio","Jessica","Luis","Fran","Sandra")
-        val apellidouno = arrayOf("Morgado","Martin","Mora","Prieto","Ramires","Santana","Ruiz","Tinoco","Gonzales","Rodriguez","Camacho")
-        val apellidodos = arrayOf("Camacho","Rodriguez","Gonzales","Tinoco","Lopez","Muriel","Prieto","Martin","Mora","Martin","Morgado")
-        val email = arrayOf("Yoana@ejemplo.com","Marta@ejemplo.com","Sofia@ejemplo.com","Laila@ejemplo.com","Manuel@ejemplo.com","Carlos@ejemplo.com","Antonio@ejemplo.com","Jessica@ejemplo.com","Luis@ejemplo.com","Antoinio@ejemplo.com","Sandra@ejemplo.com")
-        val tlf = arrayOf("625789635","965875236","254896356","632487596","658749236","965784589","951245863","632145897","987456321","965874123","652315968")
-        for (posicion in nombres.indices) {
-            amigosDBHelper.anyadirDato(
-                posicion.toInt(),
-                nombres.get(posicion).toString(),
-                apellidouno.get(posicion).toString(),
-                apellidodos.get(posicion).toString(),
-                email.get(posicion).toString(),
-                tlf.get(posicion).toString().toInt()
-            )
+        val prefs =getSharedPreferences("null", Context.MODE_PRIVATE)
+        val editar = prefs.edit()
+
+        val valor = prefs.getString("valor", "?")
+        if (valor =="?") {
+            editar.putString("valor", "true").apply()
+
+            val nombres = arrayOf("Yoana","Marta","Sofia","Laila","Manuel","Carlos","Antonio","Jessica","Luis","Fran","Sandra")
+            val apellidouno = arrayOf("Morgado","Martin","Mora","Prieto","Ramires","Santana","Ruiz","Tinoco","Gonzales","Rodriguez","Camacho")
+            val apellidodos = arrayOf("Camacho","Rodriguez","Gonzales","Tinoco","Lopez","Muriel","Prieto","Martin","Mora","Martin","Morgado")
+            val email = arrayOf("Yoana@ejemplo.com","Marta@ejemplo.com","Sofia@ejemplo.com","Laila@ejemplo.com","Manuel@ejemplo.com","Carlos@ejemplo.com","Antonio@ejemplo.com","Jessica@ejemplo.com","Luis@ejemplo.com","Antoinio@ejemplo.com","Sandra@ejemplo.com")
+            val tlf = arrayOf("625789635","965875236","254896356","632487596","658749236","965784589","951245863","632145897","987456321","965874123","652315968")
+            for (posicion in nombres.indices) {
+                amigosDBHelper.anyadirDato(
+                    posicion.toInt(),
+                    nombres.get(posicion).toString(),
+                    apellidouno.get(posicion).toString(),
+                    apellidodos.get(posicion).toString(),
+                    email.get(posicion).toString(),
+                    tlf.get(posicion).toString().toInt()
+                )
+            }
         }
 
         binding.btConsultar.setOnClickListener {
